@@ -1,0 +1,450 @@
+/* ------------------------------------------------------------------
+   Bible Trivia — Aged Leather Theme (dark)
+   Palette:
+     BG       #1A1410     Card     #2A2118     Raised   #352A1F
+     Text     #E8D5B0     Muted    #A89379     Faint    #7A6850
+     Gold     #D4AC36     Red      #C45757     Green    #92A84A
+   ------------------------------------------------------------------ */
+
+QWidget {
+    background-color: #1A1410;
+    color: #E8D5B0;
+    font-family: "Georgia", "Cambria", "Segoe UI", serif;
+    font-size: 14px;
+}
+
+QMainWindow, QStackedWidget, #HomeScreen, #GameScreen,
+#ResultsScreen, #LeaderboardScreen {
+    background-color: #1A1410;
+}
+
+/* Labels are children of cards/top-bars — let the parent surface show. */
+QLabel {
+    background: transparent;
+}
+
+/* --- Headings & text ------------------------------------------------ */
+#Title {
+    color: #E8D5B0;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: 6px;
+    padding: 6px 0;
+}
+
+#Subtitle {
+    color: #A89379;
+    font-style: italic;
+    font-size: 16px;
+}
+
+#FieldLabel {
+    color: #C9B083;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+#ErrorLabel {
+    color: #D87070;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* --- Card surfaces -------------------------------------------------- */
+#Card,
+#QuestionCard,
+#TopBar {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 14px;
+}
+
+#QuestionMeta {
+    color: #D4AC36;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+#QuestionText {
+    color: #F0E0B8;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 12px 8px;
+}
+
+/* --- Inputs --------------------------------------------------------- */
+QLineEdit#NicknameField {
+    background-color: #352A1F;
+    border: 2px solid #6E551A;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 18px;
+    color: #F0E0B8;
+    selection-background-color: #D4AC36;
+    selection-color: #1A0F08;
+}
+QLineEdit#NicknameField:focus {
+    border-color: #D4AC36;
+}
+
+/* --- Primary / Secondary / Tertiary buttons ------------------------- */
+QPushButton#PrimaryButton {
+    background-color: #D4AC36;
+    color: #1A0F08;
+    border: 2px solid #A6831D;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+QPushButton#PrimaryButton:hover { background-color: #E6BE3E; }
+QPushButton#PrimaryButton:pressed { background-color: #B89125; }
+
+QPushButton#SecondaryButton {
+    background-color: #2A2118;
+    color: #E8D5B0;
+    border: 2px solid #6E551A;
+    border-radius: 12px;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+QPushButton#SecondaryButton:hover {
+    background-color: #3F3225;
+    border-color: #D4AC36;
+    color: #F0E0B8;
+}
+QPushButton#SecondaryButton:pressed { background-color: #4A3A28; }
+
+QPushButton#TertiaryButton {
+    background: transparent;
+    color: #A89379;
+    border: none;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+QPushButton#TertiaryButton:hover {
+    color: #D87070;
+    text-decoration: underline;
+}
+
+/* --- Filter buttons ------------------------------------------------- */
+QPushButton#FilterButton {
+    background-color: #2A2118;
+    color: #E8D5B0;
+    border: 2px solid #6E551A;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+QPushButton#FilterButton:hover {
+    background-color: #3F3225;
+    border-color: #D4AC36;
+}
+QPushButton#FilterButton:checked {
+    background-color: #D4AC36;
+    color: #1A0F08;
+    border-color: #A6831D;
+}
+
+/* --- Answer buttons ------------------------------------------------- */
+QPushButton#AnswerButton {
+    background-color: #2A2118;
+    color: #E8D5B0;
+    border: 2px solid #6E551A;
+    border-radius: 14px;
+    padding: 16px 22px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: left;
+}
+QPushButton#AnswerButton:hover {
+    background-color: #3F3225;
+    border-color: #D4AC36;
+    color: #F0E0B8;
+}
+QPushButton#AnswerButton:pressed {
+    background-color: #4A3A28;
+}
+QPushButton#AnswerButton:disabled {
+    color: #A89379;
+}
+QPushButton#AnswerButton[state="correct"] {
+    background-color: #6E8030;
+    color: #F0E5C5;
+    border-color: #92A84A;
+}
+QPushButton#AnswerButton[state="wrong"] {
+    background-color: #8A3A30;
+    color: #F0E5C5;
+    border-color: #C45757;
+}
+
+/* --- In-game top bar ----------------------------------------------- */
+#LivesLabel {
+    color: #C45757;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 6px;
+}
+#LivesLabel[alert="true"] {
+    color: #D4AC36;
+}
+
+#StreakLabel {
+    color: #D4AC36;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+#ScoreLabel {
+    color: #E8D5B0;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+/* --- Timer bar ------------------------------------------------------ */
+QProgressBar#TimerBar {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 10px;
+    text-align: center;
+    color: #F0E0B8;
+    font-weight: 800;
+    letter-spacing: 2px;
+    min-height: 24px;
+}
+QProgressBar#TimerBar::chunk {
+    background-color: #6E8030;
+    border-radius: 8px;
+}
+QProgressBar#TimerBar[state="critical"]::chunk {
+    background-color: #8A3A30;
+}
+QProgressBar#TimerBar[alert="true"] {
+    border-color: #C45757;
+}
+
+/* --- Big score (results) ------------------------------------------- */
+#BigScore {
+    color: #D4AC36;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 84px;
+    font-weight: 900;
+    padding: 4px 0;
+}
+
+/* --- Leaderboard table --------------------------------------------- */
+QTableWidget#LeaderboardTable {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 12px;
+    gridline-color: transparent;
+    color: #E8D5B0;
+    font-size: 15px;
+    alternate-background-color: #352A1F;
+}
+QTableWidget#LeaderboardTable::item {
+    padding: 10px 14px;
+    border-bottom: 1px solid #3F3225;
+}
+QHeaderView::section {
+    background-color: #D4AC36;
+    color: #1A0F08;
+    border: none;
+    padding: 10px 14px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+QTableCornerButton::section {
+    background-color: #D4AC36;
+    border: none;
+}
+
+/* --- On-screen keyboard (horizontal letter picker) ---------------- */
+#OnScreenKeyboard {
+    background-color: #221A12;
+    border: 2px solid #6E551A;
+    border-radius: 14px;
+}
+
+#OSKStrip {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 12px;
+}
+
+#OSKCenter {
+    color: #D4AC36;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 64px;
+    font-weight: 900;
+    padding: 0 6px;
+}
+
+#OSKNear {
+    color: #E8D5B0;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 34px;
+    font-weight: 700;
+    padding: 0 4px;
+}
+
+#OSKFar {
+    color: #7A6850;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+#OSKChevron {
+    color: #D4AC36;
+    font-size: 36px;
+    font-weight: 900;
+}
+
+#OSKHint {
+    color: #A89379;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    padding: 6px 0 0 0;
+}
+
+/* ==================================================================
+   Spectator window (HDMI / secondary display) — larger fonts for
+   distance viewing. Same dark palette.
+   ================================================================== */
+
+#SpectatorIdle, #SpectatorPlay {
+    background-color: #1A1410;
+}
+
+#SpectatorTitle {
+    color: #E8D5B0;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: 10px;
+    padding: 8px 0;
+}
+
+#SpectatorTimeframe {
+    color: #D4AC36;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 8px;
+    padding: 4px 0 8px 0;
+}
+
+#SpectatorCTA {
+    color: #D87070;
+    font-family: "Georgia", "Cambria", serif;
+    font-style: italic;
+    font-size: 26px;
+    font-weight: 700;
+    padding: 14px 0 4px 0;
+}
+
+#SpectatorEmpty {
+    color: #A89379;
+    font-style: italic;
+    font-size: 22px;
+}
+
+QTableWidget#SpectatorLeaderboard {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 14px;
+    gridline-color: transparent;
+    color: #E8D5B0;
+    font-size: 22px;
+    alternate-background-color: #352A1F;
+}
+QTableWidget#SpectatorLeaderboard::item {
+    padding: 14px 18px;
+    border-bottom: 1px solid #3F3225;
+}
+
+/* --- Spectator play page ------------------------------------------ */
+#SpectatorBanner {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 14px;
+}
+
+#SpectatorPlayer {
+    color: #E8D5B0;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 5px;
+}
+
+#SpectatorStreak {
+    color: #D4AC36;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+#SpectatorScore {
+    color: #D4AC36;
+    font-family: "Georgia", "Cambria", serif;
+    font-size: 48px;
+    font-weight: 900;
+}
+
+#SpectatorLives {
+    color: #C45757;
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: 12px;
+    padding: 6px 0;
+}
+
+#SpectatorQuestionCard #QuestionText {
+    font-size: 34px;
+    padding: 16px 12px;
+}
+#SpectatorQuestionCard #QuestionMeta {
+    font-size: 16px;
+    letter-spacing: 6px;
+}
+
+QProgressBar#SpectatorTimer {
+    background-color: #2A2118;
+    border: 2px solid #6E551A;
+    border-radius: 12px;
+    text-align: center;
+    color: #F0E0B8;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    min-height: 32px;
+}
+QProgressBar#SpectatorTimer::chunk {
+    background-color: #6E8030;
+    border-radius: 10px;
+}
+QProgressBar#SpectatorTimer[state="critical"]::chunk {
+    background-color: #8A3A30;
+}
+
+#SpectatorPlay QPushButton#AnswerButton {
+    font-size: 24px;
+    padding: 22px 28px;
+}
+#SpectatorPlay QPushButton#AnswerButton:disabled {
+    color: #E8D5B0;            /* keep readable when display-only */
+}

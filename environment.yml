@@ -1,0 +1,8 @@
+name: bible-trivia
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pyside6>=6.5
+  # Raspberry Pi only — install on a Pi with:
+  #   pip install gpiozero

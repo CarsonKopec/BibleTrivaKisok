@@ -1,0 +1,121 @@
+"""Seed the questions table with a starter bank of Bible trivia."""
+from __future__ import annotations
+
+from db.database import connect
+
+QUESTIONS: list[tuple[str, str, str, str, str, str, str, str]] = [
+    ("Who built the ark to survive the great flood?",
+     "Moses", "Noah", "Abraham", "David",
+     "B", "easy", "Old Testament"),
+    ("For how many days and nights did it rain during the flood?",
+     "7", "12", "40", "100",
+     "C", "easy", "Old Testament"),
+    ("Who led the Israelites out of Egypt?",
+     "Joshua", "Aaron", "Moses", "Samuel",
+     "C", "easy", "Old Testament"),
+    ("Which young shepherd defeated the giant Goliath?",
+     "Saul", "David", "Solomon", "Jonathan",
+     "B", "easy", "Old Testament"),
+    ("How many disciples did Jesus call to follow him?",
+     "7", "10", "12", "14",
+     "C", "easy", "New Testament"),
+    ("In what town was Jesus born?",
+     "Nazareth", "Jerusalem", "Capernaum", "Bethlehem",
+     "D", "easy", "New Testament"),
+    ("Which prophet was thrown into a den of lions?",
+     "Elijah", "Daniel", "Isaiah", "Ezekiel",
+     "B", "easy", "Old Testament"),
+    ("Who interpreted Pharaoh's dreams about the seven years of plenty and famine?",
+     "Joseph", "Moses", "Daniel", "Solomon",
+     "A", "medium", "Old Testament"),
+    ("What is the first book of the Bible?",
+     "Exodus", "Genesis", "Psalms", "Matthew",
+     "B", "easy", "General"),
+    ("What is the final book of the Bible?",
+     "Jude", "Revelation", "John", "Acts",
+     "B", "easy", "General"),
+    ("Which disciple denied knowing Jesus three times?",
+     "John", "Judas", "Peter", "Thomas",
+     "C", "easy", "New Testament"),
+    ("Who baptized Jesus in the Jordan River?",
+     "John the Baptist", "Peter", "Paul", "Andrew",
+     "A", "easy", "New Testament"),
+    ("How many books are in the Old Testament (Protestant canon)?",
+     "27", "39", "46", "66",
+     "B", "medium", "General"),
+    ("How many books are in the New Testament?",
+     "21", "24", "27", "31",
+     "C", "medium", "General"),
+    ("What was the apostle Paul's name before his conversion?",
+     "Silas", "Saul", "Simon", "Stephen",
+     "B", "medium", "New Testament"),
+    ("Who was the wife of Abraham and mother of Isaac?",
+     "Rebekah", "Rachel", "Sarah", "Leah",
+     "C", "easy", "Old Testament"),
+    ("Which body of water did Moses part for the Israelites?",
+     "Sea of Galilee", "Red Sea", "Dead Sea", "Jordan River",
+     "B", "easy", "Old Testament"),
+    ("At the wedding in Cana, what did Jesus turn water into?",
+     "Oil", "Bread", "Wine", "Milk",
+     "C", "easy", "New Testament"),
+    ("Who is described as the strongest man in the Bible?",
+     "Samson", "Gideon", "Goliath", "Saul",
+     "A", "easy", "Old Testament"),
+    ("Which prophet was swallowed by a great fish?",
+     "Jonah", "Hosea", "Amos", "Micah",
+     "A", "easy", "Old Testament"),
+    ("For what gift was King Solomon most famously known?",
+     "Strength", "Wisdom", "Wealth alone", "Beauty",
+     "B", "easy", "Old Testament"),
+    ("Who was the first murderer recorded in the Bible?",
+     "Cain", "Esau", "Lamech", "Pharaoh",
+     "A", "medium", "Old Testament"),
+    ("What did God create on the first day, according to Genesis 1?",
+     "The sun", "Light", "The earth", "Plants",
+     "B", "medium", "Old Testament"),
+    ("Who was the mother of Jesus?",
+     "Martha", "Elizabeth", "Mary", "Anna",
+     "C", "easy", "New Testament"),
+    ("How many commandments did God give Moses on Mount Sinai?",
+     "7", "10", "12", "15",
+     "B", "easy", "Old Testament"),
+    ("Which disciple betrayed Jesus for thirty pieces of silver?",
+     "Peter", "Judas Iscariot", "Thomas", "Bartholomew",
+     "B", "easy", "New Testament"),
+    ("What animal miraculously spoke to the prophet Balaam?",
+     "Lamb", "Ox", "Donkey", "Camel",
+     "C", "medium", "Old Testament"),
+    ("On which mountain did Noah's ark come to rest?",
+     "Sinai", "Ararat", "Carmel", "Nebo",
+     "B", "medium", "Old Testament"),
+    ("Who was the first man created by God?",
+     "Adam", "Cain", "Seth", "Enoch",
+     "A", "easy", "Old Testament"),
+    ("Which disciple walked on water with Jesus before sinking?",
+     "John", "Andrew", "James", "Peter",
+     "D", "medium", "New Testament"),
+    ("In which Gospel is the verse \"For God so loved the world...\" found?",
+     "Matthew", "Mark", "Luke", "John",
+     "D", "medium", "New Testament"),
+    ("Which book of the Bible is famous for its 150 songs and prayers?",
+     "Proverbs", "Psalms", "Lamentations", "Ecclesiastes",
+     "B", "easy", "Old Testament"),
+]
+
+
+def seed(force: bool = False) -> int:
+    """Insert default questions when the table is empty. Returns number inserted."""
+    with connect() as conn:
+        existing = conn.execute("SELECT COUNT(*) FROM questions").fetchone()[0]
+        if existing > 0 and not force:
+            return 0
+        if force:
+            conn.execute("DELETE FROM questions")
+        conn.executemany(
+            "INSERT INTO questions "
+            "(question, option_a, option_b, option_c, option_d, correct_answer, difficulty, category) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            QUESTIONS,
+        )
+        conn.commit()
+        return len(QUESTIONS)
