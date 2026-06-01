@@ -64,9 +64,9 @@ COLOR_GREEN = "#92A84A"
 
 GPIO_PINS: dict[str, int] = {
     "A": 17,
-    "B": 18,
-    "C": 27,
-    "D": 22,
+    "B": 27,
+    "C": 22,
+    "D": 23,
 }
 
 DUAL_SCREEN_ENABLED: bool = _env_bool("BT_DUAL_SCREEN", True)

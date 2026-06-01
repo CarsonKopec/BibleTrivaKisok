@@ -9,12 +9,19 @@ from PySide6.QtWidgets import (
 from game.scoreboard import Timeframe, top_scores
 from ui.widgets.leaderboard_table import LeaderboardTable
 
-_FILTERS: list[tuple[str, Timeframe]] = [
-    ("Daily", "daily"),
-    ("Weekly", "weekly"),
-    ("Monthly", "monthly"),
-    ("All-Time", "all"),
+_FILTERS: list[tuple[str, Timeframe, str]] = [
+    ("A.  Daily", "daily", "A"),
+    ("B.  Weekly", "weekly", "B"),
+    ("C.  Monthly", "monthly", "C"),
+    ("D.  All-Time", "all", "D"),
 ]
+
+_LETTER_TO_FILTER: dict[str, Timeframe] = {
+    "A": "daily",
+    "B": "weekly",
+    "C": "monthly",
+    "D": "all",
+}
 
 
 class LeaderboardScreen(QWidget):
@@ -38,7 +45,7 @@ class LeaderboardScreen(QWidget):
         self._filter_group = QButtonGroup(self)
         self._filter_group.setExclusive(True)
         self._filter_buttons: dict[Timeframe, QPushButton] = {}
-        for label, tf in _FILTERS:
+        for label, tf, _letter in _FILTERS:
             btn = QPushButton(label)
             btn.setObjectName("FilterButton")
             btn.setCheckable(True)
@@ -61,7 +68,7 @@ class LeaderboardScreen(QWidget):
 
         bottom = QHBoxLayout()
         bottom.addStretch(1)
-        back = QPushButton("Return to Menu")
+        back = QPushButton("Return to Menu  (hold A + D)")
         back.setObjectName("SecondaryButton")
         back.setMinimumHeight(44)
         back.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -73,8 +80,31 @@ class LeaderboardScreen(QWidget):
         self._current: Timeframe = "all"
         self._filter_buttons["all"].setChecked(True)
 
+        self._down: set[str] = set()
+        self._chord_fired: bool = False
+
     def refresh(self) -> None:
+        self._down.clear()
+        self._chord_fired = False
         self._set_filter(self._current)
+
+    def handle_letter(self, letter: str) -> bool:
+        self._down.add(letter)
+        if "A" in self._down and "D" in self._down and not self._chord_fired:
+            self._chord_fired = True
+            self.home_requested.emit()
+            return True
+        tf = _LETTER_TO_FILTER.get(letter)
+        if tf is None:
+            return False
+        self._set_filter(tf)
+        return True
+
+    def handle_release(self, letter: str) -> bool:
+        self._down.discard(letter)
+        if letter in ("A", "D"):
+            self._chord_fired = False
+        return False
 
     def _set_filter(self, tf: Timeframe) -> None:
         self._current = tf

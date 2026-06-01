@@ -19,6 +19,8 @@ _ARROW_NAV: dict[int, str] = {
 
 _LETTER_NAV: dict[str, str] = {"A": "up", "B": "right", "C": "left", "D": "down"}
 
+_LETTER_BUTTON_ACTIONS: dict[str, str] = {"A": "begin", "B": "hall", "D": "exit"}
+
 
 class HomeScreen(QWidget):
     start_requested = Signal(str)
@@ -60,17 +62,21 @@ class HomeScreen(QWidget):
         self.error.setObjectName("ErrorLabel")
         self.error.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        begin = QPushButton("Begin Challenge")
+        begin_label = "Begin Challenge" if ONSCREEN_KEYBOARD_ENABLED else "A.  Begin Challenge"
+        hall_label = "Hall of Records" if ONSCREEN_KEYBOARD_ENABLED else "B.  Hall of Records"
+        exit_label = "Exit" if ONSCREEN_KEYBOARD_ENABLED else "D.  Exit"
+
+        begin = QPushButton(begin_label)
         begin.setObjectName("PrimaryButton")
         begin.setMinimumHeight(56)
         begin.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        hall = QPushButton("Hall of Records")
+        hall = QPushButton(hall_label)
         hall.setObjectName("SecondaryButton")
         hall.setMinimumHeight(48)
         hall.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        exit_btn = QPushButton("Exit")
+        exit_btn = QPushButton(exit_label)
         exit_btn.setObjectName("TertiaryButton")
         exit_btn.setMinimumHeight(40)
         exit_btn.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -116,6 +122,16 @@ class HomeScreen(QWidget):
     # External input routing (called by MainWindow for GPIO/keyboard letters)
     def handle_directional_press(self, letter: str) -> bool:
         if self.osk is None:
+            action = _LETTER_BUTTON_ACTIONS.get(letter)
+            if action == "begin":
+                self._on_begin()
+                return True
+            if action == "hall":
+                self.leaderboard_requested.emit()
+                return True
+            if action == "exit":
+                self.exit_requested.emit()
+                return True
             return False
         direction = _LETTER_NAV.get(letter)
         if direction is None:

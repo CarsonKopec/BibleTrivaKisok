@@ -9,6 +9,9 @@ from PySide6.QtWidgets import (
 from game.scoreboard import save_score
 
 
+_LETTER_ACTIONS = {"A": "again", "B": "home"}
+
+
 class ResultsScreen(QWidget):
     again_requested = Signal()
     home_requested = Signal()
@@ -64,6 +67,9 @@ class ResultsScreen(QWidget):
         again.clicked.connect(self.again_requested.emit)
         home.clicked.connect(self.home_requested.emit)
 
+        again.setText("A.  Begin Again")
+        home.setText("B.  Return to Menu")
+
         card_layout.addWidget(title)
         card_layout.addWidget(self.nickname_label)
         card_layout.addSpacing(8)
@@ -83,6 +89,16 @@ class ResultsScreen(QWidget):
         outer.addStretch(1)
         outer.addLayout(center)
         outer.addStretch(1)
+
+    def handle_letter(self, letter: str) -> bool:
+        action = _LETTER_ACTIONS.get(letter)
+        if action == "again":
+            self.again_requested.emit()
+            return True
+        if action == "home":
+            self.home_requested.emit()
+            return True
+        return False
 
     def set_result(self, nickname: str, score: int, correct: int, answered: int) -> None:
         self.last_nickname = nickname

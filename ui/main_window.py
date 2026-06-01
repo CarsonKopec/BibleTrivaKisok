@@ -136,10 +136,17 @@ class MainWindow(QMainWindow):
             self.game.submit_answer(letter)
         elif current is self.home:
             self.home.handle_directional_press(letter)
+        elif current is self.results:
+            self.results.handle_letter(letter)
+        elif current is self.leaderboard:
+            self.leaderboard.handle_letter(letter)
 
     def _route_release(self, letter: str) -> None:
-        if self.stack.currentWidget() is self.home:
+        current = self.stack.currentWidget()
+        if current is self.home:
             self.home.handle_directional_release(letter)
+        elif current is self.leaderboard:
+            self.leaderboard.handle_release(letter)
 
     # Shutdown
     def closeEvent(self, event):  # type: ignore[override]
